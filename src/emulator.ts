@@ -26,7 +26,19 @@ export interface ITestFile {
  * @returns {Promise<void>}
  */
 export const main = async (args: string[]) => {
-  const file: ITestFile = JSON.parse(readFileSync(__dirname + "/../test/" + args[2] + ".json").toString("utf-8"));
+
+  let filepath = args[2];
+
+  if (typeof filepath !== "string") {
+    console.log("ERROR: mqtt-reqres <filepath>");
+    return;
+  }
+
+  if (!filepath.endsWith(".json")) {
+    filepath = filepath + ".json"
+  }
+
+  const file: ITestFile = JSON.parse(readFileSync(filepath).toString("utf-8"));
   const client = connect(config.MQTT_URI);
 
   client.on("connect", () => {
@@ -34,7 +46,7 @@ export const main = async (args: string[]) => {
       console.log("+", test.request.topic);
       client.subscribe(test.request.topic);
     }
-    console.log("\n", "Ready to work !", "\n")
+    console.log("\n", "Ready to work !")
   });
 
   client.on("message", (topic, rawPayload) => {
