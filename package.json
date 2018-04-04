@@ -26,7 +26,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "tsc && ./bin/mqtt-reqres.js examples/default"
+    "watch": "tsc -w",
+    "start": "./bin/mqtt-reqres.js examples/default"
   },
   "dependencies": {
     "mqtt": "^2.17.0"
