@@ -1,0 +1,14 @@
+{
+  "tests": [
+    {
+      "request": {
+        "topic": "request/test",
+        "payload": {"test": 123}
+      },
+      "response": {
+        "topic": "response/test",
+        "payload": {"success": true, "extra": {"test": 123}}
+      }
+    }
+  ]
+}
