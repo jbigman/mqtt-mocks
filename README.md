@@ -14,3 +14,45 @@ Dev
 ```bash
 npm start
 ```
+
+
+
+How to write json file
+---
+
+```
+{
+  "fixtures": [
+    {
+      "topic": "response/test",
+      "payload": {
+        "success": true,
+        "extra": {
+          "test": 5000
+        }
+      }
+    }
+  ],
+  "tests": [
+    {
+      "request": {
+        "topic": "request/test",
+        "payload": {
+          "test": 9000
+        }
+      },
+      "responses": [
+        {
+          "topic": "response/test",
+          "payload": {
+            "success": true,
+            "extra": {
+              "test": 9000
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+```

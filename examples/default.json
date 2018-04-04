@@ -1,14 +1,34 @@
 {
+  "fixtures": [
+    {
+      "topic": "response/test",
+      "payload": {
+        "success": true,
+        "extra": {
+          "test": 5000
+        }
+      }
+    }
+  ],
   "tests": [
     {
       "request": {
         "topic": "request/test",
-        "payload": {"test": 123}
+        "payload": {
+          "test": 9000
+        }
       },
-      "response": {
-        "topic": "response/test",
-        "payload": {"success": true, "extra": {"test": 123}}
-      }
+      "responses": [
+        {
+          "topic": "response/test",
+          "payload": {
+            "success": true,
+            "extra": {
+              "test": 9000
+            }
+          }
+        }
+      ]
     }
   ]
 }
