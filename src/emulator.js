@@ -35,14 +35,21 @@ exports.main = (args) => __awaiter(this, void 0, void 0, function* () {
             console.log("+", test.request.topic);
             client.subscribe(test.request.topic);
         }
+        if (file.fixtures) {
+            for (let fixture of file.fixtures) {
+                client.publish(fixture.topic, JSON.stringify(fixture.payload));
+            }
+        }
         console.log("\n", "Ready to work !");
     });
     client.on("message", (topic, rawPayload) => {
         console.log("-> REQUEST:", topic, "\n", rawPayload.toString());
         const match = file.tests.find(exports.matchTest(topic, rawPayload));
         if (!!match) {
-            client.publish(match.response.topic, JSON.stringify(match.response.payload));
-            console.log("<- RESPONSE:", match.response.topic, "\n", JSON.stringify(match.response.payload));
+            for (const response of match.responses) {
+                client.publish(response.topic, JSON.stringify(response.payload));
+                console.log("<- RESPONSE:", response.topic, "\n", JSON.stringify(response.payload));
+            }
         }
         else {
             console.log("<- ERROR: No match");
