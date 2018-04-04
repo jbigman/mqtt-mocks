@@ -5,12 +5,12 @@ MQTT tool that take a json file as entry. It describes responses to provide acco
 How to use
 ---
 
-Build
-```bash
-npm i && npm run build
-```
-
 Install globally
 ```bash
-sudo npm i -g .
+git clone https://github.com/jbigman/mqtt-request-response.git && cd mqtt-request-response && sudo npm i -g .
+```
+
+Dev
+```bash
+npm start
 ```

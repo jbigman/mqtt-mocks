@@ -1,7 +1,33 @@
 {
-  "name": "mqtt-reqres",
+  "name": "mqtt-request-response",
   "bin": "bin/mqtt-reqres.js",
   "version": "1.0.0",
+  "description": "Tool used to prepare specific publications in reaction to other mqtt publications",
+  "keywords": [
+    "MQTT",
+    "Publish",
+    "Subscribe"
+  ],
+  "homepage": "https://github.com/jbigman/mqtt-request-response",
+  "bugs": {
+    "url": "https://github.com/jbigman/mqtt-request-response/issues"
+  },
+  "license": "MIT",
+  "author": "jbigman",
+  "contributors": [
+    {
+      "name": "nolyme",
+      "url": "https://github.com/nolyme"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jbigman/mqtt-request-response.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "tsc && ./bin/mqtt-reqres.js examples/default"
+  },
   "dependencies": {
     "mqtt": "^2.17.0"
   },
@@ -9,8 +35,5 @@
     "@types/node": "^9.6.2",
     "typescript": "^2.8.1"
   },
-  "scripts": {
-    "build": "tsc",
-    "start": "tsc && ./bin/mqtt-reqres.js examples/default"
-  }
+  "private": false
 }
