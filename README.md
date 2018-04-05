@@ -19,18 +19,18 @@ Dev
 npm start
 ```
 
-Start the application with scenario files
+Start the application with 1 file
 ```
-./bin/mqtt-reqres.js fullpath.json
+./bin/mqtt-reqres.js filepath.json
 ```
 .json is not mandatory
 ```
-./bin/mqtt-reqres.js fullpath
+./bin/mqtt-reqres.js filepath
 ```
 
 Load multiple files
 ```
-./bin/mqtt-reqres.js fullpath1 fullpath2 fullpath3
+./bin/mqtt-reqres.js filepath1 filepath2 filepathN
 ```
 
 
