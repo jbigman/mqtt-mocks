@@ -19,6 +19,19 @@ Dev
 npm start
 ```
 
+Start the application with scenario files
+```
+./bin/mqtt-reqres.js fullpath.json
+```
+.json is not mandatory
+```
+./bin/mqtt-reqres.js fullpath
+```
+
+Load multiple files
+```
+./bin/mqtt-reqres.js fullpath1 fullpath2 fullpath3
+```
 
 
 How to write json file
@@ -37,8 +50,9 @@ How to write json file
       }
     }
   ],
-  "tests": [
+  "cases": [
     {
+      "description": "Case description",
       "request": {
         "topic": "request/test",      
         "payload": {                  // topic with this exact payload will match, payload is not mandatory
@@ -60,3 +74,4 @@ How to write json file
   ]
 }
 ```
+
