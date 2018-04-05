@@ -28,30 +28,36 @@ export interface ITestFile {
  */
 export const main = async (args: string[]) => {
 
-  let filepath = args[2];
-
-  if (typeof filepath !== "string") {
-    console.log("ERROR: mqtt-reqres <filepath>");
-    return;
-  }
-
-  if (!filepath.endsWith(".json")) {
-    filepath = filepath + ".json"
-  }
-
-  const file: ITestFile = JSON.parse(readFileSync(filepath).toString("utf-8"));
   const client = connect(config.MQTT_URI);
+  const fixtures: ITestData[] = [];
+  const tests: ITestCase[] = [];
 
+  // Read files (from arg2 to infinity and beyond)
+  for (const arg of args.slice(2)) {
+
+    if (typeof arg !== "string") {
+      console.log("ERROR: mqtt-reqres <filepath>");
+      return;
+    }
+
+    const filepath = arg.endsWith(".json") ? arg : arg + ".json";
+    const file: ITestFile = JSON.parse(readFileSync(filepath).toString("utf-8"));
+
+    if (file.fixtures) {
+      fixtures.push(...file.fixtures);
+    }
+    tests.push(...file.tests);
+  }
+
+  // Publish fixtures in MQTT broker
   client.on("connect", () => {
-    for (const test of file.tests) {
+    for (const test of tests) {
       console.log("+", test.request.topic);
       client.subscribe(test.request.topic);
     }
 
-    if (file.fixtures) {
-      for (let fixture of file.fixtures) {
-        client.publish(fixture.topic, JSON.stringify(fixture.payload));
-      }
+    for (let fixture of fixtures) {
+      client.publish(fixture.topic, JSON.stringify(fixture.payload));
     }
 
     console.log("\n", "Ready to work !")
@@ -59,7 +65,7 @@ export const main = async (args: string[]) => {
 
   client.on("message", (topic, rawPayload) => {
     console.log("-> REQUEST:", topic, "\n", rawPayload.toString());
-    const match = file.tests.find(matchTest(topic, rawPayload));
+    const match = tests.find(matchTest(topic, rawPayload));
     if (!!match) {
       for (const response of match.responses) {
         client.publish(response.topic, JSON.stringify(response.payload));
