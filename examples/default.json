@@ -10,8 +10,9 @@
       }
     }
   ],
-  "tests": [
+  "cases": [
     {
+      "description": "Case description",
       "request": {
         "topic": "request/test",
         "payload": {

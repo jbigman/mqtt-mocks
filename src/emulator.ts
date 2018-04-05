@@ -11,13 +11,14 @@ export interface ITestData {
 }
 
 export interface ITestCase {
+  description?: string;
   request: ITestData;
   responses: ITestData[];
 }
 
 export interface ITestFile {
   fixtures?: ITestData[];
-  tests: ITestCase[];
+  cases: ITestCase[];
 }
 
 /**
@@ -30,7 +31,7 @@ export const main = async (args: string[]) => {
 
   const client = connect(config.MQTT_URI);
   const fixtures: ITestData[] = [];
-  const tests: ITestCase[] = [];
+  const cases: ITestCase[] = [];
 
   // Read files (from arg2 to infinity and beyond)
   for (const arg of args.slice(2)) {
@@ -46,12 +47,12 @@ export const main = async (args: string[]) => {
     if (file.fixtures) {
       fixtures.push(...file.fixtures);
     }
-    tests.push(...file.tests);
+    cases.push(...file.cases);
   }
 
   // Publish fixtures in MQTT broker
   client.on("connect", () => {
-    for (const test of tests) {
+    for (const test of cases) {
       console.log("+", test.request.topic);
       client.subscribe(test.request.topic);
     }
@@ -65,7 +66,7 @@ export const main = async (args: string[]) => {
 
   client.on("message", (topic, rawPayload) => {
     console.log("-> REQUEST:", topic, "\n", rawPayload.toString());
-    const match = tests.find(matchTest(topic, rawPayload));
+    const match = cases.find(matchTest(topic, rawPayload));
     if (!!match) {
       for (const response of match.responses) {
         client.publish(response.topic, JSON.stringify(response.payload));
