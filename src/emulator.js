@@ -22,7 +22,7 @@ exports.config = {
 exports.main = (args) => __awaiter(this, void 0, void 0, function* () {
     const client = mqtt_1.connect(exports.config.MQTT_URI);
     const fixtures = [];
-    const tests = [];
+    const cases = [];
     // Read files (from arg2 to infinity and beyond)
     for (const arg of args.slice(2)) {
         if (typeof arg !== "string") {
@@ -34,11 +34,11 @@ exports.main = (args) => __awaiter(this, void 0, void 0, function* () {
         if (file.fixtures) {
             fixtures.push(...file.fixtures);
         }
-        tests.push(...file.tests);
+        cases.push(...file.cases);
     }
     // Publish fixtures in MQTT broker
     client.on("connect", () => {
-        for (const test of tests) {
+        for (const test of cases) {
             console.log("+", test.request.topic);
             client.subscribe(test.request.topic);
         }
@@ -49,7 +49,7 @@ exports.main = (args) => __awaiter(this, void 0, void 0, function* () {
     });
     client.on("message", (topic, rawPayload) => {
         console.log("-> REQUEST:", topic, "\n", rawPayload.toString());
-        const match = tests.find(exports.matchTest(topic, rawPayload));
+        const match = cases.find(exports.matchTest(topic, rawPayload));
         if (!!match) {
             for (const response of match.responses) {
                 client.publish(response.topic, JSON.stringify(response.payload));
