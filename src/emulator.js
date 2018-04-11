@@ -36,8 +36,10 @@ exports.main = (args) => __awaiter(this, void 0, void 0, function* () {
         }
         cases.push(...file.cases);
     }
+    console.log("Start MQTT connection...");
     // Publish fixtures in MQTT broker
     client.on("connect", () => {
+        console.log("MQTT connection established");
         for (const test of cases) {
             console.log("+", test.request.topic);
             client.subscribe(test.request.topic);
