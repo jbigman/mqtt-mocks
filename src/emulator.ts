@@ -50,8 +50,10 @@ export const main = async (args: string[]) => {
     cases.push(...file.cases);
   }
 
+  console.log("Start MQTT connection...");
   // Publish fixtures in MQTT broker
   client.on("connect", () => {
+    console.log("MQTT connection established");
     for (const test of cases) {
       console.log("+", test.request.topic);
       client.subscribe(test.request.topic);
