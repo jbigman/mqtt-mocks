@@ -6,6 +6,7 @@ this tool reads a json file which contains
 * tests: It describes responses to provide according to each provided request
 Two messages sent on the same queue could be differentiated by different payloads. 
 
+
 How to use
 ---
 
@@ -18,6 +19,12 @@ Dev
 ```bash
 npm start
 ```
+
+Change Mqtt URI:
+```
+./bin/mqtt-reqres.js MQTT_URI=mqtt://192.168.0.1:1883 filepath
+```
+*Default value: mqtt://127.0.0.1:1883*
 
 Start the application with 1 file
 ```
@@ -32,7 +39,6 @@ Load multiple files
 ```
 ./bin/mqtt-reqres.js filepath1 filepath2 filepathN
 ```
-
 
 How to write json file
 ---
