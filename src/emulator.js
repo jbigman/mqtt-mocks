@@ -8,10 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mqtt_1 = require("mqtt");
 const fs_1 = require("fs");
+const mqtt_1 = require("mqtt");
 exports.config = {
-    MQTT_URI: process.env.MQTT_URI || "mqtt://127.0.0.1:1883",
+    MQTT_URI: process.env.MQTT_URI || "mqtt://192.168.1.1:1883",
 };
 /**
  * Main Function
@@ -45,7 +45,7 @@ exports.main = (args) => __awaiter(this, void 0, void 0, function* () {
             client.subscribe(test.request.topic);
         }
         for (let fixture of fixtures) {
-            client.publish(fixture.topic, JSON.stringify(fixture.payload));
+            client.publish(fixture.topic, JSON.stringify(fixture.payload), { qos: 0, retain: true });
         }
         console.log("\n", "Ready to work !");
     });

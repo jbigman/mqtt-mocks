@@ -1,8 +1,8 @@
-import { connect } from "mqtt";
 import { readFileSync } from "fs";
+import { connect } from "mqtt";
 
 export const config = {
-  MQTT_URI: process.env.MQTT_URI || "mqtt://127.0.0.1:1883",
+  MQTT_URI: process.env.MQTT_URI || "mqtt://192.168.1.1:1883",
 };
 
 export interface ITestData {
@@ -60,7 +60,7 @@ export const main = async (args: string[]) => {
     }
 
     for (let fixture of fixtures) {
-      client.publish(fixture.topic, JSON.stringify(fixture.payload));
+      client.publish(fixture.topic, JSON.stringify(fixture.payload), {qos: 0, retain: true});
     }
 
     console.log("\n", "Ready to work !")
