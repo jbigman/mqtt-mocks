@@ -1,4 +1,4 @@
-# mqtt-request-response
+# mqtt-mocks
 MQTT Tool used to prepare specific publications in reaction to other mqtt publications
 
 this tool reads a json file which contains 
